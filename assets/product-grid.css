@@ -190,7 +190,40 @@
   cursor: pointer;
   max-width: 100%;
   margin-top: 5rem;
+  position: relative;
 }
+/* add to cart loader */
+.product-grid__ATC .loading__spinner {
+  position: absolute;
+  z-index: 1;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.product-grid__ATC .loading__spinner .spinner {
+  width: 100%;
+  height: 100%;
+}
+.loader-atc.overlay {
+  background-color: rgba(0, 0, 0, 0.5);
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}
+.success-message-container {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  display: grid;
+  place-content: center;
+  color: white;
+  font-size: 1.6rem;
+  line-height: 1.2em;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  z-index: 10;
+}
+
 @media screen and (min-width: 750px) {
   .product-grid__products-container {
     position: relative;

@@ -1601,7 +1601,7 @@ details[open] > .share-button__fallback {
 .button-assessment.secondary-button:hover {
   color: rgb(var(--color-button-text));
 }
-.button-assessment svg {
+.button-assessment svg.product-arrow-right {
   position: absolute;
   right: 2rem;
 }

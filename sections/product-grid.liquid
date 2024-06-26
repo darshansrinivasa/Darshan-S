@@ -74,10 +74,21 @@
               </div>
 
               <div class="product-grid__ATC button-assessment">
-                {{ 'products.product.add_to_cart' | t }}
+                <span>{{ 'products.product.add_to_cart' | t }}</span>
                 {% render 'icon' with 'arrow-right' %}
                 <span class="animation-bg"></span>
+                
+                <div class="loader-atc">
+                  <div class="loading__spinner hidden">
+                    <svg aria-hidden="true" focusable="false" role="presentation" class="spinner" viewBox="0 0 66 66" xmlns="http://www.w3.org/2000/svg">
+                      <circle class="path" fill="none" stroke-width="6" cx="33" cy="33" r="30"></circle>
+                    </svg>
+                  </div>
+                </div>
               </div>
+            </div>
+            <div class="success-message-container hidden">
+              <span> Product successfully added to cart </span>
             </div>
           </dialog>
         </product-item>
@@ -85,7 +96,6 @@
     {% endfor %}
   </div>
 </div>
-
 
 <script src="{{ 'product-grid.js' | asset_url }}"></script>
 

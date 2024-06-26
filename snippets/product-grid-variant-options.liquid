@@ -1,42 +1,30 @@
-{% comment %}
-  Renders product variant options
-
-  Accepts:
-  - product: {Object} product object.
-  - option: {Object} current product_option object.
-  - block: {Object} block object.
-  - picker_type: {String} type of picker to dispay
 
 
-  Usage:
-  {% render 'product-grid-variant-options',
-    product: product,
-    option: option,
-    block: block
-    picker_type: picker_type
-  %}
-{% endcomment %}
 {%- liquid
   assign product_form_id = 'product-form-' | append: section.id
 -%}
 
 {%- for value in option.values -%}
-  {%- liquid
-    assign swatch_focal_point = null
-    if value.swatch.image
-      assign image_url = value.swatch.image | image_url: width: 50
-      assign swatch_value = 'url(' | append: image_url | append: ')'
-      assign swatch_focal_point = value.swatch.image.presentation.focal_point
-    elsif value.swatch.color
-      assign swatch_value = 'rgb(' | append: value.swatch.color.rgb | append: ')'
-    else
-      assign swatch_value = null
-    endif
 
+  {%- liquid
     assign option_disabled = true
     if value.available
       assign option_disabled = false
     endif
+
+    assign variant_id = ''
+    for variant in product.variants
+      if option.position == 1 and variant.option1 == value
+        assign variant_id = variant.id
+        break
+      elsif option.position == 2 and variant.option2 == value
+        assign variant_id = variant.id
+        break
+      elsif option.position == 3 and variant.option3 == value
+        assign variant_id = variant.id
+        break
+      endif
+    endfor
   -%}
 
   {%- capture input_id -%}
@@ -48,8 +36,11 @@
   {%- endcapture -%}
 
   {%- capture input_dataset -%}
-    data-product-url="{{ value.product_url }}"
     data-option-value-id="{{ value.id }}"
+    data-option="{{ value.title }}"
+    data-option-position="{{ option.position }}"
+    data-option-name="{{ option.name }}"
+    data-variant-id="{{ variant_id }}"
   {%- endcapture -%}
 
   {%- capture label_unavailable -%}
@@ -61,6 +52,9 @@
   {%- if picker_type == 'button' -%}
     <div 
       class="product-grid__color-option grid__item {% if value.selected %} selected {% endif %}"
+      data-variant-id="{{ variant_id }}"
+      data-option-name="{{ option.name }}"
+      data-option-value="{{ value }}"
     >
       <span 
         class="color-indicator"
@@ -71,7 +65,6 @@
         id="{{ input_id }}"
         name="{{ input_name }}"
         value="{{ value | escape }}"
-        form="{{ product_form_id }}"
         class="visually-hidden {% if option_disabled %} disabled {% endif %}"
         {% if value.selected %}
           checked
@@ -87,7 +80,9 @@
     <div
       id="{{ input_id }}"
       class="product-grid__select-option-value {% if value.selected %} selected {% endif %}"
-      value="{{ value | escape }}"
+      data-variant-id="{{ variant_id }}"
+      data-option-name="{{ option.name }}"
+      data-option-value="{{ value }}"
       {{ input_dataset }}
     >
       {% if option_disabled -%}
