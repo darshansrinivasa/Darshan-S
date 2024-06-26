@@ -1,0 +1,86 @@
+{% comment %}
+  Renders product variant-picker
+
+  Accepts:
+  - product: {Object} product object.
+  - block: {Object} passing the block information.
+  - product_form_id: {String} Id of the product form to which the variant picker is associated.
+  Usage:
+  {% render 'product-variant-picker', product: product, block: block, product_form_id: product_form_id %}
+{% endcomment %}
+
+{% comment %} color count {% endcomment %}
+{% assign color_option_name = 'Color' %}
+{% assign color_values = '' %}
+
+{% for option in product.options_with_values %}
+  {% if option.name == color_option_name %}
+    {% assign color_values = option.values | join: ',' %}
+    {% break %}
+  {% endif %}
+{% endfor %}
+
+{% assign unique_colors = color_values | split: ',' | uniq %}
+{% assign color_count = unique_colors | size %}
+
+{%- unless product.has_only_default_variant -%}
+  <variant-selects
+    id="variant-selects-{{ section.id }}"
+    data-section="{{ section.id }}"
+    {{ block.shopify_attributes }}
+  >
+    {%- for option in product.options_with_values -%}
+      {%- assign option_name = option.name | downcase -%}
+
+      {% comment %} color swatches {% endcomment %}
+      {%- if option_name == 'color' or option_name == 'colour' -%}
+        {% assign picker_type = 'button' %}
+        <div class="js product-form__input product-form__input--pill">
+          <legend class="form__label">{{ option_name }}</legend>
+          <div class="product-grid-options-container grid grid--{{ color_count }}-col"
+            {{ option_size }}
+          >
+          {% render 'product-grid-variant-options',
+            product: product,
+            option: option,
+            block: block,
+            picker_type: picker_type
+          %}
+          </div>
+        </div>
+
+      {% comment %} size dropdown {% endcomment %}
+      {%- elsif option_name == 'size' -%}
+        {% assign picker_type = 'dropdown' %}
+        <div class="product-form__input product-form__input--dropdown">
+          <label class="form__label" for="Option-{{ section.id }}-{{ forloop.index0 }}">
+            {{ option_name }}
+          </label>
+          <div class="product-grid__accordion">
+            <div class="product-grid__accordion-summary product-grid__select">
+              <span>choose your {{ option_name }}</span>
+              <div class="dropdown--icon">
+                {% render 'icon' with 'caret' %}
+              </div>
+            </div>
+              <div
+                class="product-grid__select-options hidden"
+                id="Option-{{ section.id }}-{{ forloop.index0 }}"
+                name="options[{{ option.name | escape }}]"
+                form="{{ product_form_id }}"
+              >
+                {% render 'product-grid-variant-options',
+                  product: product,
+                  option: option,
+                  block: block,
+                  picker_type: picker_type
+                %}
+              </div>
+          </div>
+        </div>
+      {%- endif -%}
+    {%- endfor -%}
+
+    <script type="application/json" data-selected-variant>{{ product.selected_or_first_available_variant | json }}</script>
+  </variant-selects>
+{%- endunless -%}

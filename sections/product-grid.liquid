@@ -1,0 +1,213 @@
+{{ 'product-grid.css' | asset_url | stylesheet_tag }}
+
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+  {% for block in section.blocks %}
+    .product-grid__hotpost {
+        top: 1.8rem;
+        right: 5.2rem;
+      }
+    @media screen and (min-width: 750px) {
+      .product-grid__hotpost.hotspot-{{ block.id }} {
+        top: {{ block.settings.top }}%;
+        left: {{ block.settings.left }}%;
+      }
+    }
+  {% endfor %}
+{%- endstyle -%}
+
+<div class="product-grid__container {% unless section.settings.full_width -%} page-width {%- endunless %} section-{{ section.id }}-padding">
+  {% comment %} section heading {% endcomment %}
+  {% if section.settings.heading != blank %}
+    <h3 class="product-grid__header">
+      {{ section.settings.heading }}
+    </h3>
+  {% endif %}
+  
+  {% comment %} products grid {% endcomment %}
+   <div class="product-grid__products-container grid grid--{{ section.settings.mobile_per_row }}-col grid--{{ section.settings.desktop_per_row }}-col-tablet grid--{{ section.settings.desktop_per_row }}-col-desktop">
+    {% for block in section.blocks %}
+      {% assign product = block.settings.product %}
+      <div class="grid__item">
+        <product-item>
+          <div class="product-grid__product-item">
+            <div class="product-grid__image">
+              {{ product.featured_image | image_url: width: auto, height: auto | image_tag  }}
+            </div>
+
+            <span class="product-grid__hotpost hotspot-{{ block.id }}">
+              {% render 'icon' with 'plus' %}
+            </span>
+          </div> 
+
+          {% comment %} product popup {% endcomment %}
+          <dialog class="product-grid__popup-container">
+            <div class="product-grid__popup">
+              {% comment %} popup close button {% endcomment %}
+              <button class="popup-close-btn">
+                {% render 'icon' with 'close' %}
+              </button>
+              {% comment %}  product details {% endcomment %}
+              <div class="product-grid__product-info">
+                <div class="product-grid__image">
+                  {{ product.featured_image | image_url: width:auto | image_tag }}
+                </div>
+                <div class="product-grid__info">
+                  <h5 class="product-grid__title">{{- product.title -}}</h5>
+                  <span class="product-gird__price">{{- product.price | money_with_currency -}}</span>
+                  <p class="product-grid__description"> {{- product.description -}}</p>
+                </div>
+              </div>
+              <div class="product-grid-options">
+                {%- assign product_form_id = 'product-form-' | append: section.id -%}
+                {% render 'product-grid-variant-picker', product: product, block: block, product_form_id: product_form_id %}
+              </div>
+
+              <div class="product-grid__ATC button-assessment">
+                {{ 'products.product.add_to_cart' | t }}
+                {% render 'icon' with 'arrow-right' %}
+                <span class="animation-bg"></span>
+              </div>
+            </div>
+          </dialog>
+        </product-item>
+      </div>
+    {% endfor %}
+  </div>
+</div>
+
+
+<script src="{{ 'product-grid.js' | asset_url }}"></script>
+
+{% schema %}
+{
+  "name": "Product Grid",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "text",
+      "label": "Heading",
+      "id": "heading"
+    },
+    {
+      "type": "range",
+      "label": "Desktop per row",
+      "id": "desktop_per_row",
+      "default": 3,
+      "min": 2,
+      "max": 8,
+      "step": 1,
+      "unit": "box",
+      "info": "Number of product card to showcase per row in desktop."
+    },
+    {
+      "type": "range",
+      "label": "Mobile per row",
+      "id": "mobile_per_row",
+      "default": 3,
+      "min": 2,
+      "max": 8,
+      "step": 1,
+      "unit": "box",
+      "info": "Number of product card to showcase per row in mobile."
+    },
+    {
+      "type": "checkbox",
+      "id": "full_width",
+      "label": "Section width",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "t:sections.all.padding.section_padding_heading"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "label": "t:sections.all.padding.padding_top",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "label": "t:sections.all.padding.padding_bottom",
+      "default": 36
+    }
+  ],
+  "blocks": [
+    {
+      "type": "product",
+      "name": "Product",
+      "limit": 12,
+      "settings": [
+        {
+          "type": "product",
+          "label": "Product",
+          "id": "product"
+        },
+        {
+          "type": "header",
+          "content": "Pop up position"
+        },
+        {
+          "type": "range",
+          "label": "Left",
+          "id": "left",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "%",
+          "default": 50,
+          "info": "set pop up position from left corner of the card"
+        },
+        {
+          "type": "range",
+          "label": "top",
+          "id": "top",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "%",
+          "default": 50,
+          "info": "set pop up position from top corner of the card"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Product Grid",
+      "blocks": [ 
+        {
+          "type": "product"
+        },
+        {
+          "type": "product"
+        },
+        {
+          "type": "product"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
+  
