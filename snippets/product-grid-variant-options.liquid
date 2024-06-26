@@ -1,0 +1,97 @@
+
+
+{%- liquid
+  assign product_form_id = 'product-form-' | append: section.id
+-%}
+
+{%- for value in option.values -%}
+
+  {%- liquid
+    assign option_disabled = true
+    if value.available
+      assign option_disabled = false
+    endif
+
+    assign variant_id = ''
+    for variant in product.variants
+      if option.position == 1 and variant.option1 == value
+        assign variant_id = variant.id
+        break
+      elsif option.position == 2 and variant.option2 == value
+        assign variant_id = variant.id
+        break
+      elsif option.position == 3 and variant.option3 == value
+        assign variant_id = variant.id
+        break
+      endif
+    endfor
+  -%}
+
+  {%- capture input_id -%}
+    {{ section.id }}-{{ option.position }}-{{ forloop.index0 -}}
+  {%- endcapture -%}
+
+  {%- capture input_name -%}
+    {{ option.name }}-{{ option.position }}
+  {%- endcapture -%}
+
+  {%- capture input_dataset -%}
+    data-option-value-id="{{ value.id }}"
+    data-option="{{ value.title }}"
+    data-option-position="{{ option.position }}"
+    data-option-name="{{ option.name }}"
+    data-variant-id="{{ variant_id }}"
+  {%- endcapture -%}
+
+  {%- capture label_unavailable -%}
+    <span class="visually-hidden label-unavailable">
+      {{- 'products.product.variant_sold_out_or_unavailable' | t -}}
+    </span>
+  {%- endcapture -%}
+
+  {%- if picker_type == 'button' -%}
+    <div 
+      class="product-grid__color-option grid__item {% if value.selected %} selected {% endif %}"
+      data-variant-id="{{ variant_id }}"
+      data-option-name="{{ option.name }}"
+      data-option-value="{{ value }}"
+    >
+      <span 
+        class="color-indicator"
+        style="background-color: {{ value }}"
+      ></span>
+      <input
+        type="radio"
+        id="{{ input_id }}"
+        name="{{ input_name }}"
+        value="{{ value | escape }}"
+        class="visually-hidden {% if option_disabled %} disabled {% endif %}"
+        {% if value.selected %}
+          checked
+        {% endif %}
+        {{ input_dataset }}
+      >
+      <label for="{{ input_id }}">
+        {{ value -}}
+        {{ label_unavailable }}
+        <span class="animation-bg"></span>
+      </label>
+      
+    </div>
+  {%- elsif picker_type == 'dropdown' -%}
+    <div
+      id="{{ input_id }}"
+      class="product-grid__select-option-value {% if value.selected %} selected {% endif %}"
+      data-variant-id="{{ variant_id }}"
+      data-option-name="{{ option.name }}"
+      data-option-value="{{ value }}"
+      {{ input_dataset }}
+    >
+      {% if option_disabled -%}
+        {{- 'products.product.value_unavailable' | t: option_value: value -}}
+      {%- else -%}
+        {{- value -}}
+      {%- endif %}
+    </div>
+  {%- endif -%}
+{%- endfor -%}

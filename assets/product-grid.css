@@ -1,0 +1,301 @@
+.product-grid__header {
+  margin: 0;
+  font-size: 2.4rem;
+  line-height: 1.2em;
+  text-align: center;
+}
+.product-grid__product-item,
+.product-grid__popup {
+  position: relative;
+}
+.product-grid__products-container {
+  margin-top: 2rem;
+}
+.product-grid__image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  aspect-ratio: 433/444;
+}
+.product-grid__hotpost {
+  width: 2.2rem;
+  height: 2.2rem;
+  background: rgba(248, 248, 248, 0.9);
+  border-radius: 50%;
+  position: absolute;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+}
+.product-grid__popup-container {
+  position: fixed;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 31rem;
+  max-height: 45rem;
+  background-color: rgba(255, 255, 255, 1);
+  z-index: 1;
+  padding: 0;
+  overflow: inherit;
+  border: none;
+}
+.product-grid__popup-container::backdrop {
+  background: rgba(0, 0, 0, 0.5);
+}
+.product-grid__product-info {
+  display: flex;
+  gap: 0.8rem;
+}
+.product-grid__product-info .product-grid__image {
+  width: 12rem;
+  height: 14rem;
+  flex-shrink: 0;
+}
+.product-grid__popup {
+  padding: 3.6rem 2rem 2.5rem;
+}
+.popup-close-btn {
+  position: absolute;
+  top: 1.2rem;
+  right: 2rem;
+  cursor: pointer;
+  border: none;
+  background: none;
+}
+.product-grid__info {
+  margin-top: 1.3rem;
+}
+.product-grid__title {
+  font-size: 1.6rem;
+  line-height: 1.2;
+  margin: 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  min-height: calc(1.2em * 2);
+}
+.product-gird__price {
+  font-size: 1.6rem;
+  line-height: 1.2;
+  margin: 1.1rem 0 1.2rem 0;
+  display: block;
+}
+.product-grid__info p,
+.product-grid__description {
+  margin: 0;
+  font-size: 1.4rem;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  line-height: 1.2em;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+}
+.product-grid-options {
+  margin-top: 1rem;
+}
+.product-grid-options variant-selects {
+  display: flex;
+  flex-direction: column-reverse;
+}
+.product-grid-options-container {
+  display: flex;
+  gap: 0;
+}
+.product-grid-options .form__label {
+  font-size: 1.4rem;
+  line-height: 1.2em;
+  text-transform: capitalize;
+}
+
+/* button swatches */
+.product-grid-options .product-form__input--pill {
+  margin-bottom: 1.2rem;
+}
+.product-grid__color-option {
+  display: flex;
+  align-items: center;
+  border: 0.5px solid rgba(0, 0, 0, 1);
+  height: 4rem;
+  cursor: pointer;
+}
+.product-grid__color-option:first-child {
+  border-right: none;
+}
+.product-grid__color-option:first-child {
+  border-right: none;
+}
+.product-grid__color-option label {
+  font-size: 1.8rem;
+  line-height: 1em;
+  letter-spacing: -0.02em;
+  /* padding-left: 0.8rem; */
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.5s ease;
+}
+.product-grid__color-option.selected label {
+  color: rgba(255, 255, 255, 1);
+}
+.color-indicator {
+  display: block;
+  width: 0.5rem;
+  height: 100%;
+  border-right: 0.5px solid rgba(0, 0, 0, 1);
+}
+
+/* select dropdown */
+.product-grid__accordion svg.icon-caret {
+  transition: rotate 0.5s ease;
+}
+.product-grid__accordion:not(:has(.hidden)) svg.icon-caret {
+  rotate: 180deg;
+}
+.product-grid__select {
+  height: 4rem;
+  padding: 0 1.3rem;
+  border: 0.5px solid rgba(0, 0, 0, 1);
+  z-index: 1;
+  background: transparent;
+  display: flex;
+  align-items: center;
+  position: relative;
+  line-height: 1em;
+  letter-spacing: -0.02em;
+}
+.product-grid__select .dropdown--icon {
+  position: absolute;
+  right: 0;
+  border-left: 0.5px solid rgba(0, 0, 0, 1);
+  width: 4.5rem;
+  display: flex;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.6rem;
+  line-height: 1em;
+}
+.product-grid__accordion {
+  cursor: pointer;
+}
+.product-grid__select-options {
+  position: absolute;
+  background: rgba(255, 255, 255, 1);
+  z-index: 2;
+  width: calc(100% - 40px);
+  text-align: center;
+  border: 1px solid rgba(0, 0, 0, 1);
+  border-top: none;
+}
+.product-grid__select-option-value {
+  font-size: 1.6rem;
+  line-height: 1em;
+  padding: 1rem 0;
+  cursor: pointer;
+}
+.product-grid__ATC {
+  cursor: pointer;
+  max-width: 100%;
+  margin-top: 5rem;
+  position: relative;
+}
+/* add to cart loader */
+.product-grid__ATC .loading__spinner {
+  position: absolute;
+  z-index: 1;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.product-grid__ATC .loading__spinner .spinner {
+  width: 100%;
+  height: 100%;
+}
+.product-grid__ATC .loading__spinner .spinner .path {
+  stroke: rgba(255, 255, 255, 1);
+}
+.loader-atc.overlay {
+  background-color: rgba(0, 0, 0, 0.5);
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}
+.success-message-container {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  display: grid;
+  place-content: center;
+  color: white;
+  font-size: 1.6rem;
+  line-height: 1.2em;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  z-index: 10;
+}
+
+@media screen and (min-width: 750px) {
+  .product-grid__products-container {
+    position: relative;
+  }
+  .product-grid__header {
+    font-size: 3.6rem;
+    text-align: left;
+  }
+  .product-grid__products-contianer {
+    margin-top: 3rem;
+  }
+}
+
+/* color swatches animation */
+.product-grid__color-option .animation-bg {
+  background: rgba(0, 0, 0, 1);
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  z-index: -1;
+  left: 0;
+  bottom: 0;
+  transition: all 0.5s ease-in-out;
+  transform: translateX(-100%);
+}
+.product-grid__color-option.selected .animation-bg {
+  transition: all 0.5s ease-in-out;
+  transform: translateX(0%);
+}
+.product-grid__color-option:first-child .animation-bg {
+  transform: translateX(100%);
+}
+.product-grid__color-option.selected:first-child .animation-bg {
+  transform: translateX(0%);
+}
+.product-grid__color-option:last-child .animation-bg {
+  transform: translateX(-100%);
+}
+.product-grid__color-option.selected:last-child .animation-bg {
+  transform: translateX(0%);
+}
+/* accordion animation */
+.product-grid__select-options.hidden {
+  opacity: 0;
+  height: 0;
+  transition-property: display opacity;
+  transition-duration: 0.5s;
+  transition-behavior: allow-discrete;
+}
+.product-grid__select-options {
+  display: block;
+  opacity: 1;
+  height: auto;
+
+  @starting-style {
+    opacity: 0;
+    height: 0;
+  }
+}
