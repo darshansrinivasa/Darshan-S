@@ -1,3 +1,12 @@
+/*
+* ------------------------------------------------------------
+* IMPORTANT: The contents of this file are auto-generated.
+*
+* This file may be updated by the Shopify admin theme editor
+* or related systems. Please exercise caution as any changes
+* made to this file may be overwritten.
+* ------------------------------------------------------------
+*/
 {
   "sections": {
     "component_banner_G36tJY": {
@@ -15,9 +24,9 @@
         "banner_content_3xMARi": {
           "type": "banner_content",
           "settings": {
-            "desktop_image": "shopify://shop_images/Frame.png",
-            "desktop_image_2": "shopify://shop_images/Frame_1.png",
-            "mobile_image": "shopify://shop_images/Frame_2.png",
+            "desktop_image": "shopify:\/\/shop_images\/Frame.png",
+            "desktop_image_2": "shopify:\/\/shop_images\/Frame_1.png",
+            "mobile_image": "shopify:\/\/shop_images\/Frame_2.png",
             "title": "The Gift Guide",
             "description": "Discover Joy: Your Ultimate Holiday Gift Destination. Explore our curated selection and find the perfect gifts to delight your loved ones this holiday season.",
             "button_label": "shop now",
@@ -43,5 +52,7 @@
       }
     }
   },
-  "order": ["component_banner_G36tJY"]
+  "order": [
+    "component_banner_G36tJY"
+  ]
 }
