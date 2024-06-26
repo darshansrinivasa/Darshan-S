@@ -71,8 +71,9 @@ class productitem extends HTMLElement {
     );
     if (this.summary) {
       this.summary.addEventListener("click", () => {
-        this.closeAccordion();
-        this.variantSelectsContainer.classList.remove("hidden");
+        this.summaryText.innerHTML = "Choose your size";
+        this.summary.style.justifyContent = "flex-start";
+        this.variantSelectsContainer.classList.toggle("hidden");
       });
     }
   }
@@ -199,6 +200,7 @@ class productitem extends HTMLElement {
     setTimeout(() => {
       this.successMsgContainer.classList.add("hidden");
       this.popup.close();
+      document.body.classList.remove("overflow-hidden");
     }, 3000);
   }
 }
