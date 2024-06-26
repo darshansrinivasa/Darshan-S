@@ -1,0 +1,221 @@
+{{ 'product-banner.css' | asset_url | stylesheet_tag }}
+
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+{%- endstyle -%}
+
+<div class="product-banner__container {% unless section.settings.full_width -%} page-width {%- endunless %} section-{{ section.id }}-padding">
+  {%- for block in section.blocks -%}
+    {%- case block.type -%}
+      {% comment %} banner header rendered by a snippet {% endcomment %}
+      {% when 'banner_header' %}
+        <div class="product-banner__header-container">
+          {% render 'product-banner-header',
+            block: block
+          %}
+        </div>
+
+      {% comment %} banner content includes image and the text content {% endcomment %}
+       {% when 'banner_content' %}
+        <div class="product-banner__banner">
+          <div class="product-banner__dekstop-image-1 small-hide">
+            {% if block.settings.desktop_image != blank %}
+              {{ block.settings.desktop_image | image_url: width:1440 | image_tag }}
+            {% else %}
+              {{ 'lifestyle-2' | placeholder_svg_tag }}
+            {% endif %}
+          </div>
+          <div class="product-banner__dekstop-image-2 small-hide">
+            {% if block.settings.desktop_image_2 != blank %}
+              {{ block.settings.desktop_image_2 | image_url: width:990 | image_tag }}
+            {% else %}
+              {{ 'lifestyle-2' | placeholder_svg_tag }}
+            {% endif %}
+          </div>
+          <div class="product-banner__mobile-image medium-hide large-up-hide">
+            {% if block.settings.mobile_image != blank %}
+              {{ block.settings.mobile_image | image_url: width:720 | image_tag }}
+            {% else %}
+              {{ 'lifestyle-2' | placeholder_svg_tag }}
+            {% endif %}
+          </div>
+          <div class="product-banner__content">
+            {% if block.settings.title != blank %}
+              <h2 class="product-banner__content-heading">
+                {{ block.settings.title }}
+              </h2>
+            {% endif %}
+            {% if block.settings.description != blank %}
+              <p class="product-banner__content-description">
+                {{ block.settings.description }}
+              </p>
+            {% endif %}
+            {% if block.settings.button_label != blank %}
+              <a 
+                href="{{ block.settings.button_url }}"
+                class="button-assessment product-banner__content-button"
+              >
+                {{ block.settings.button_label }}
+                {% render 'icon' with 'arrow-right' %}
+                <span class="animation-bg"></span>
+              </a>
+            {% endif %}
+          </div>
+      </div>
+
+      {% comment %} banner footer {% endcomment %}
+      {% when 'banner_footer' %}
+        <div class="product-banner__footer">
+          {{ block.settings.text }}
+        </div>
+    {%- endcase -%}
+  {%- endfor -%}
+</div>
+
+{% schema %}
+{
+  "name": "Product banner",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "full_width",
+      "label": "Section width",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "t:sections.all.padding.section_padding_heading"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "label": "t:sections.all.padding.padding_top",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "label": "t:sections.all.padding.padding_bottom",
+      "default": 36
+    }
+  ],
+  "blocks": [
+    {
+      "type": "banner_header",
+      "name": "Banner Header",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "text",
+          "label": "Shop title",
+          "id": "shop_title"
+        },
+        {
+          "type": "text",
+          "label": "Announcement text",
+          "id": "announcement_text"
+        },
+        {
+          "type": "text",
+          "label": "Button text",
+          "id": "button_text"
+        },
+        {
+          "type": "url",
+          "label": "button url",
+          "id": "button_url"
+        }
+      ]
+    },
+    {
+      "type": "banner_content",
+      "name": "Banner content",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "image_picker",
+          "label": "Desktop Image",
+          "id": "desktop_image"
+        },
+        {
+          "type": "image_picker",
+          "label": "Desktop Image 2",
+          "id": "desktop_image_2"
+        },
+        {
+          "type": "image_picker",
+          "label": "Mobile image",
+          "id": "mobile_image"
+        },
+        {
+          "type": "text",
+          "label": "Title",
+          "id": "title"
+        },
+        {
+          "type": "text",
+          "label": "Description",
+          "id": "description"
+        },
+        {
+          "type": "text",
+          "label": "Button label",
+          "id": "button_label"
+        },
+        {
+          "type": "url",
+          "label": "Button url",
+          "id": "button_url"
+        }
+      ]
+    },
+    {
+      "type": "banner_footer",
+      "name": "Banner footer",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "text",
+          "label": "text",
+          "id": "text"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Product banner",
+      "blocks": [
+        {
+          "type": "banner_header"
+        },
+        {
+          "type": "banner_content"
+        },
+        {
+          "type": "banner_footer"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,47 @@
+{
+  "sections": {
+    "component_banner_G36tJY": {
+      "type": "product-banner",
+      "blocks": {
+        "banner_header_7iTegU": {
+          "type": "banner_header",
+          "settings": {
+            "shop_title": "TISSO VISON",
+            "announcement_text": "Find the ideal gift for your loved ones.",
+            "button_text": "choose gift",
+            "button_url": ""
+          }
+        },
+        "banner_content_3xMARi": {
+          "type": "banner_content",
+          "settings": {
+            "desktop_image": "shopify://shop_images/Frame.png",
+            "desktop_image_2": "shopify://shop_images/Frame_1.png",
+            "mobile_image": "shopify://shop_images/Frame_2.png",
+            "title": "The Gift Guide",
+            "description": "Discover Joy: Your Ultimate Holiday Gift Destination. Explore our curated selection and find the perfect gifts to delight your loved ones this holiday season.",
+            "button_label": "shop now",
+            "button_url": ""
+          }
+        },
+        "banner_footer_r3GEwN": {
+          "type": "banner_footer",
+          "settings": {
+            "text": "SUSTAINABLE, ETHICALLY MADE ACTIVEWEAR"
+          }
+        }
+      },
+      "block_order": [
+        "banner_header_7iTegU",
+        "banner_content_3xMARi",
+        "banner_footer_r3GEwN"
+      ],
+      "settings": {
+        "full_width": true,
+        "padding_top": 0,
+        "padding_bottom": 48
+      }
+    }
+  },
+  "order": ["component_banner_G36tJY"]
+}
